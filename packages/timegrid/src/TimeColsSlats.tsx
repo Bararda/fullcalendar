@@ -322,7 +322,7 @@ export function buildExplicitSlots(explicitSlots: Array<Slot>, dateEnv: DateEnv)
     let date = dateEnv.add(dayStart, slot.start)
     return {
       date,
-      time: slot,
+      time: slot.start,
       key: date.toISOString(),
       isoTimeStr: formatIsoTimeString(date),
       isLabeled
