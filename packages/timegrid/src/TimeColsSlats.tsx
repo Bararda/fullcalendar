@@ -226,8 +226,8 @@ export function TimeColsAxisCell(props: TimeSlatMeta) {
 
           let labelFormat = // TODO: fully pre-parse
             options.slotLabelFormat == null ? DEFAULT_SLAT_LABEL_FORMAT :
-            Array.isArray(options.slotLabelFormat) ? createFormatter(options.slotLabelFormat[0]) :
-            createFormatter(options.slotLabelFormat)
+              Array.isArray(options.slotLabelFormat) ? createFormatter(options.slotLabelFormat[0]) :
+                createFormatter(options.slotLabelFormat)
 
           let hookProps: SlotLabelContentArg = {
             time: props.time,
@@ -276,12 +276,16 @@ export interface TimeSlatMeta {
   isLabeled: boolean
 }
 
-export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, explicitLabelInterval: Duration | null, slotDuration: Duration, dateEnv: DateEnv) {
+export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, explicitLabelInterval: Duration | null, slotDuration: Duration, dateEnv: DateEnv, explicitSlots?: Array<Slot>) {
   let dayStart = new Date(0)
   let slatTime = slotMinTime
   let slatIterator = createDuration(0)
   let labelInterval = explicitLabelInterval || computeLabelInterval(slotDuration)
   let metas: TimeSlatMeta[] = []
+
+  if (explicitSlots) {
+    return buildExplicitSlots(explicitSlots, dateEnv);
+  }
 
   while (asRoughMs(slatTime) < asRoughMs(slotMaxTime)) {
     let date = dateEnv.add(dayStart, slatTime)
@@ -300,6 +304,31 @@ export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, exp
   }
 
   return metas
+}
+
+export interface Slot {
+  start: Duration
+  end: Duration
+}
+/**
+ * Builds the metas for explicitly declared slots. These slots should not take into account slotMin and slotMax
+ * @param explicitSlots the slots to display on the schedule
+ * @param dateEnv DateEnv for meta object
+ */
+export function buildExplicitSlots(explicitSlots: Array<Slot>, dateEnv: DateEnv) {
+  let dayStart = new Date(0);
+  let isLabeled = true;
+  const metas: TimeSlatMeta[] = explicitSlots.map(slot => {
+    let date = dateEnv.add(dayStart, slot.start)
+    return {
+      date,
+      time: slot,
+      key: date.toISOString(),
+      isoTimeStr: formatIsoTimeString(date),
+      isLabeled
+    } as TimeSlatMeta
+  });
+  return metas;
 }
 
 

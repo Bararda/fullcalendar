@@ -6,7 +6,6 @@ import { computeVisibleDayRange } from './util/date'
 import { getNow } from './reducers/current-date'
 import { CalendarApi } from './CalendarApi'
 
-
 export interface DateProfile {
   currentRange: DateRange // TODO: does this include slotMinTime/slotMaxTime?
   currentRangeUnit: string
@@ -164,7 +163,7 @@ export class DateProfileGenerator { // only publicly used for isHiddenDay :(
 
       // how far the current date will move for a prev/next operation
       dateIncrement: this.buildDateIncrement(currentInfo.duration)
-        // pass a fallback (might be null) ^
+      // pass a fallback (might be null) ^
     }
   }
 

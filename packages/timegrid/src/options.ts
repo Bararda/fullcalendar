@@ -1,4 +1,5 @@
 
 export const OPTION_REFINERS = {
-  allDaySlot: Boolean
+  allDaySlot: Boolean,
+  Slots: Array
 }

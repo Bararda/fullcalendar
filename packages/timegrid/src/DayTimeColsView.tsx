@@ -12,7 +12,6 @@ import { TimeColsView } from './TimeColsView'
 import { DayTimeCols } from './DayTimeCols'
 import { buildSlatMetas } from './TimeColsSlats'
 
-
 export class DayTimeColsView extends TimeColsView {
 
   private buildTimeColsModel = memoize(buildTimeColsModel)
@@ -25,7 +24,7 @@ export class DayTimeColsView extends TimeColsView {
     let { dateProfile } = props
     let dayTableModel = this.buildTimeColsModel(dateProfile, dateProfileGenerator)
     let splitProps = this.allDaySplitter.splitProps(props)
-    let slatMetas = this.buildSlatMetas(dateProfile.slotMinTime, dateProfile.slotMaxTime, options.slotLabelInterval, options.slotDuration, dateEnv)
+    let slatMetas = this.buildSlatMetas(dateProfile.slotMinTime, dateProfile.slotMaxTime, options.slotLabelInterval, options.slotDuration, dateEnv, options.slots)
     let { dayMinWidth } = options
     let hasAttachedAxis = !dayMinWidth
     let hasDetachedAxis = dayMinWidth
