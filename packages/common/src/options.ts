@@ -37,7 +37,7 @@ import {
   ToolbarInput, CustomButtonInput, ButtonIconsInput, ButtonTextCompoundInput,
   EventContentArg, EventMountArg,
   DatesSetArg,
-  EventApi, EventAddArg, EventChangeArg, EventRemoveArg
+  EventApi, EventAddArg, EventChangeArg, EventRemoveArg, SlotArg
 } from './api-type-deps'
 
 
@@ -180,7 +180,7 @@ export const BASE_OPTION_REFINERS = {
   dayMaxEventRows: identity as Identity<boolean | number>,
   dayMinWidth: Number,
   slotLabelInterval: createDuration,
-
+  slot: identity as Identity<ClassNamesGenerator<SlotArg>>,
   allDayText: String,
   allDayClassNames: identity as Identity<ClassNamesGenerator<AllDayContentArg>>,
   allDayContent: identity as Identity<CustomContentGenerator<AllDayContentArg>>,
@@ -445,14 +445,14 @@ export type GenericListenerRefiners = {
 
 export type RawOptionsFromRefiners<Refiners extends GenericRefiners> = {
   [Prop in keyof Refiners]?: // all optional
-    Refiners[Prop] extends ((input: infer RawType) => infer RefinedType)
-      ? (any extends RawType ? RefinedType : RawType) // if input type `any`, use output (for Boolean/Number/String)
-      : never
+  Refiners[Prop] extends ((input: infer RawType) => infer RefinedType)
+  ? (any extends RawType ? RefinedType : RawType) // if input type `any`, use output (for Boolean/Number/String)
+  : never
 }
 
 export type RefinedOptionsFromRefiners<Refiners extends GenericRefiners> = {
   [Prop in keyof Refiners]?: // all optional
-    Refiners[Prop] extends ((input: any) => infer RefinedType) ? RefinedType : never
+  Refiners[Prop] extends ((input: any) => infer RefinedType) ? RefinedType : never
 }
 
 export type DefaultedRefinedOptions<RefinedOptions extends Dictionary, DefaultKey extends keyof RefinedOptions> =

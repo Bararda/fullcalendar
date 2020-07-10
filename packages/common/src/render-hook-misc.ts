@@ -31,4 +31,10 @@ export interface DayHeaderContentArg extends DateMeta {
   text: string
   [otherProp: string]: any
 }
+
+export interface SlotArg {
+  start: Duration
+  end: Duration
+}
+
 export type DayHeaderMountArg = MountArg<DayHeaderContentArg>

@@ -97,6 +97,7 @@ export {
 export { unpromisify } from './util/promise'
 
 export { Emitter } from './common/Emitter'
+export { SlotArg } from './render-hook-misc'
 export { DateRange, rangeContainsMarker, intersectRanges, rangesEqual, rangesIntersect, rangeContainsRange } from './datelib/date-range'
 export { PositionCache } from './common/PositionCache'
 export { ScrollController, ElementScrollController, WindowScrollController } from './common/scroll-controller'

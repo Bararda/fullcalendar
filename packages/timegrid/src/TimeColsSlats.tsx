@@ -19,7 +19,8 @@ import {
   RenderHook,
   DateProfile,
   SlotLabelContentArg,
-  SlotLaneContentArg
+  SlotLaneContentArg,
+  SlotArg
 } from '@fullcalendar/common'
 import { TimeColsSlatsCoords } from './TimeColsSlatsCoords'
 
@@ -276,7 +277,7 @@ export interface TimeSlatMeta {
   isLabeled: boolean
 }
 
-export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, explicitLabelInterval: Duration | null, slotDuration: Duration, dateEnv: DateEnv, explicitSlots?: Array<Slot>) {
+export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, explicitLabelInterval: Duration | null, slotDuration: Duration, dateEnv: DateEnv, explicitSlots?: Array<SlotArg>) {
   let dayStart = new Date(0)
   let slatTime = slotMinTime
   let slatIterator = createDuration(0)
@@ -306,16 +307,12 @@ export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, exp
   return metas
 }
 
-export interface Slot {
-  start: Duration
-  end: Duration
-}
 /**
  * Builds the metas for explicitly declared slots. These slots should not take into account slotMin and slotMax
  * @param explicitSlots the slots to display on the schedule
  * @param dateEnv DateEnv for meta object
  */
-export function buildExplicitSlots(explicitSlots: Array<Slot>, dateEnv: DateEnv) {
+export function buildExplicitSlots(explicitSlots: Array<SlotArg>, dateEnv: DateEnv) {
   let dayStart = new Date(0);
   let isLabeled = true;
   const metas: TimeSlatMeta[] = explicitSlots.map(slot => {

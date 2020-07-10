@@ -25,7 +25,7 @@ export {
   SlotLabelContentArg, SlotLabelMountArg,
   AllDayContentArg, AllDayMountArg,
   DayHeaderContentArg,
-  DayHeaderMountArg
+  DayHeaderMountArg, SlotArg
 } from './render-hook-misc'
 export { DayCellContentArg, DayCellMountArg } from './common/DayCellRoot'
 export { ViewContentArg, ViewMountArg } from './common/ViewRoot'
