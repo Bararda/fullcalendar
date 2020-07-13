@@ -37,7 +37,7 @@ import {
   ToolbarInput, CustomButtonInput, ButtonIconsInput, ButtonTextCompoundInput,
   EventContentArg, EventMountArg,
   DatesSetArg,
-  EventApi, EventAddArg, EventChangeArg, EventRemoveArg, SlotArg
+  EventApi, EventAddArg, EventChangeArg, EventRemoveArg
 } from './api-type-deps'
 
 
@@ -180,7 +180,6 @@ export const BASE_OPTION_REFINERS = {
   dayMaxEventRows: identity as Identity<boolean | number>,
   dayMinWidth: Number,
   slotLabelInterval: createDuration,
-  slot: identity as Identity<ClassNamesGenerator<SlotArg>>,
   allDayText: String,
   allDayClassNames: identity as Identity<ClassNamesGenerator<AllDayContentArg>>,
   allDayContent: identity as Identity<CustomContentGenerator<AllDayContentArg>>,
