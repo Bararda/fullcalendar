@@ -315,10 +315,11 @@ export function buildExplicitSlots(explicitSlots: Array<any>, dateEnv: DateEnv) 
   let dayStart = new Date(0);
   let isLabeled = true;
   const metas: TimeSlatMeta[] = explicitSlots.map(slot => {
-    let date = dateEnv.add(dayStart, slot.start)
+    const startDur = createDuration(slot.start)
+    let date = dateEnv.add(dayStart, startDur)
     return {
       date,
-      time: slot.start,
+      time: startDur,
       key: date.toISOString(),
       isoTimeStr: formatIsoTimeString(date),
       isLabeled
