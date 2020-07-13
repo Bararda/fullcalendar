@@ -274,6 +274,7 @@ export interface TimeSlatMeta {
   key: string
   isoTimeStr: string
   isLabeled: boolean
+  endDate: DateMarker
 }
 
 export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, explicitLabelInterval: Duration | null, slotDuration: Duration, dateEnv: DateEnv, explicitSlots?: Array<any>) {
@@ -288,7 +289,9 @@ export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, exp
   }
 
   while (asRoughMs(slatTime) < asRoughMs(slotMaxTime)) {
-    let date = dateEnv.add(dayStart, slatTime)
+    let date = dateEnv.add(dayStart, slatTime);
+    let endTime = addDurations(slatTime, slotDuration)
+    let endDate = dateEnv.add(dayStart, endTime)
     let isLabeled = wholeDivideDurations(slatIterator, labelInterval) !== null
 
     metas.push({
@@ -296,7 +299,8 @@ export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, exp
       time: slatTime,
       key: date.toISOString(), // we can't use the isoTimeStr for uniqueness when minTime/maxTime beyone 0h/24h
       isoTimeStr: formatIsoTimeString(date),
-      isLabeled
+      isLabeled,
+      endDate,
     })
 
     slatTime = addDurations(slatTime, slotDuration)
@@ -317,13 +321,16 @@ export function buildExplicitSlots(explicitSlots: Array<any>, dateEnv: DateEnv) 
   const [deconSlots] = explicitSlots
   const metas: TimeSlatMeta[] = deconSlots.map(slot => {
     const startDur = createDuration(slot.start)
+    const endDur = createDuration(slot.end)
     let date = dateEnv.add(dayStart, startDur)
+    let endDate = dateEnv.add(dayStart, endDur);
     return {
       date,
       time: startDur,
       key: date.toISOString(),
       isoTimeStr: formatIsoTimeString(date),
-      isLabeled
+      isLabeled,
+      endDate,
     } as TimeSlatMeta
   });
   return metas;
