@@ -314,7 +314,8 @@ export function buildSlatMetas(slotMinTime: Duration, slotMaxTime: Duration, exp
 export function buildExplicitSlots(explicitSlots: Array<any>, dateEnv: DateEnv) {
   let dayStart = new Date(0);
   let isLabeled = true;
-  const metas: TimeSlatMeta[] = explicitSlots.map(slot => {
+  const [deconSlots] = explicitSlots
+  const metas: TimeSlatMeta[] = deconSlots.map(slot => {
     const startDur = createDuration(slot.start)
     let date = dateEnv.add(dayStart, startDur)
     return {
